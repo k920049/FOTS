@@ -577,10 +577,12 @@ def image_label(txt_root, image_list, img_name, index,
         h, w, _ = im.shape
         #txt_fn = im_name.replace(im_name.split('.')[1], 'txt')
         #print(txt_fn)
-        if os.path.exists(txt_root + "/"+im_name[0:-4] + '.txt'):
-            txt_fn = im_name[0:-4] + '.txt'
-        elif os.path.exists(txt_root + "/"+im_name[0:-5] + '.txt'):
-            txt_fn = im_name[0:-5] + '.txt'
+        if os.path.exists(txt_root + "/gt_" + im_name[0:-4] + '.txt'):
+            txt_fn = "gt_" + im_name[0:-4] +  '.txt'
+        elif os.path.exists(txt_root + "/gt_" + im_name[0:-5] + ".txt"):
+            txt_fn = "gt_" + im_name[0:-5] + ".txt"
+        else:
+            print("Annotation for image {} not found!".format(im_name))
         txt_fn = os.path.join(txt_root, txt_fn)
 
         text_polys, text_tags = load_annoataion(txt_fn)
@@ -636,11 +638,18 @@ class ImageDataSet(data.Dataset):
 
     def __init__(self,img_root,txt_root):
         self.image_list,self.img_name = get_images(img_root)
+        print("Total number of images {}".format(len(self.image_list)))
         self.txt_root = txt_root
 
     def __getitem__(self, index):
-        img,score_map,geo_map,training_mask = image_label(self.txt_root,self.image_list,self.img_name,index,input_size=512,random_scale=np.array([0.5,1,2.0,3.0]),background_ratio=3./8)
-        return img,score_map,geo_map,training_mask
+        img, score_map, geo_map, training_mask = image_label(self.txt_root,
+                self.image_list,
+                self.img_name,
+                index,
+                input_size=512,
+                random_scale=np.array([0.5,1,2.0,3.0]),
+                background_ratio=3./8)
+        return img, score_map, geo_map, training_mask
 
 
     def __len__(self):

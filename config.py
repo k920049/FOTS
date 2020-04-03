@@ -21,11 +21,11 @@ class DefaultConfig(object):
     lambda_side_vertex_code_loss = 1.0
     lambda_side_vertex_coord_loss = 1.0
 
-    load_model_path = "checkpoints/model.pth"
-    save_path = "save_model/"
+    load_model_path = "/dltraining/checkpoints/icdar/icdar2015/checkpoints/model.pth"
+    save_path = "/dltraining/checkpoints/icdar/icdar2015/save_model/"
 
 
-    total_img = 16243
+    total_img = 1000
 
     validation_split_ratio = 0.1
     max_train_img_size = 736

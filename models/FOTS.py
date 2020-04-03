@@ -1,8 +1,9 @@
 import torch.nn as nn
 import torch.nn.functional as F
-import pretrainedmodels as pm
 import torch
 import math
+
+from torchvision import models
 
 MODE = "detection"
 class SharedConv(nn.Module):
@@ -163,7 +164,7 @@ class FOTS(nn.Module):
     def __init__(self):
         super(FOTS,self).__init__()
         self.mode = MODE
-        bbNet =  pm.__dict__['resnet50'](pretrained='imagenet') # resnet50 in paper
+        bbNet =  models.resnet50(pretrained=True, progress=True)
         self.sharedConv = SharedConv(bbNet)
         #self.recognizer = Recognizer()
 

@@ -1,5 +1,3 @@
 fire
-numpy
-torchvision
 visdom
 git+https://github.com/pytorch/tnt.git@master

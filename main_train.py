@@ -41,7 +41,7 @@ def train(epochs, model, trainloader, crit, optimizer,scheduler, save_step, weig
             #print(model(img))
             loss1 = crit(score_map, f_score, geo_map, f_geometry, training_mask)
 
-            loss += loss1.data[0]
+            loss += loss1
 
             loss1.backward()
             optimizer.step()
@@ -73,9 +73,9 @@ def main(**kwargs):
     if opt.use_gpu:
         model.cuda()
 
-    root_path = 'icdar_data'
-    train_img = root_path + 'images'
-    train_txt = root_path + 'labels'
+    root_path = '/dltraining/datasets/icdar/icdar2015/4.4/training/'
+    train_img = root_path + 'ch4_training_images/'
+    train_txt = root_path + 'ch4_training_localization_transcription_gt/'
     trainset = ImageDataSet(train_img, train_txt)
     trainloader = DataLoader(
         trainset, batch_size=opt.batch_size, shuffle=True, collate_fn=collate_fn, num_workers=opt.num_workers)
